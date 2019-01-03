@@ -31,7 +31,6 @@ config :web_graph, WebGraph.Endpoint,
 # configured to run both http and https servers on
 # different ports.
 config :core, Core.Repo,
-  adapter: Ecto.Adapters.Postgres,
   username: System.get_env("DEV_DB_USERNAME"),
   password: System.get_env("DEV_DB_PASSWORD"),
   database: System.get_env("DEV_DB"),
