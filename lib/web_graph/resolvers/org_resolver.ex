@@ -58,28 +58,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def get_agent(_, %{id: id}, %{context: %{session: session}}) do
-    case Org.get_agent(id, session) do
-      {:ok, user} ->
-        {:ok, user}
-
-      _ ->
-        {:ok, nil}
-    end
-  end
-
-  def get_contact(_, %{id: id}, %{context: %{session: session}}) do
-    case Org.get_contact(id, session) do
-      {:ok, user} ->
-        {:ok, user}
-
-      _ ->
-        {:ok, nil}
-    end
-  end
-
-  def get_group(_, %{id: id}, %{context: %{session: session}}) do
-    case Org.get_group(id, session) do
+  def get_group(_, args, %{context: %{session: session}}) do
+    case Org.get_group(args, session) do
       {:ok, group} ->
         {:ok, group}
 
@@ -113,8 +93,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def get_user(_, %{id: id}, %{context: %{session: session}}) do
-    case Org.get_user(id, session) do
+  def get_user(_, args, %{context: %{session: session}}) do
+    case Org.get_user(args, session) do
       {:ok, user} ->
         {:ok, user}
 
@@ -123,8 +103,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def get_workspace(_, %{id: id}, %{context: %{session: session}}) do
-    case Org.get_workspace(id, session) do
+  def get_workspace(_, args, %{context: %{session: session}}) do
+    case Org.get_workspace(args, session) do
       {:ok, workspace} ->
         {:ok, workspace}
 
@@ -248,8 +228,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def enable_workspace(_, %{input: %{id: id}}, %{context: %{session: session}}) do
-    case Org.enable_workspace(id, session) do
+  def enable_workspace(_, %{input: attrs}, %{context: %{session: session}}) do
+    case Org.enable_workspace(attrs, session) do
       {:ok, workspace} ->
         {:ok, %{workspace: workspace, responses: [%{message: workspace.name <> " enabled"}]}}
 
@@ -321,8 +301,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def delete_workspace(_, %{input: %{id: id}}, %{context: %{session: session}}) do
-    case Org.delete_workspace(id, session) do
+  def delete_workspace(_, %{input: attrs}, %{context: %{session: session}}) do
+    case Org.delete_workspace(attrs, session) do
       {:ok, workspace} ->
         {:ok, %{workspace: workspace, responses: [%{message: workspace.name <> " deleted"}]}}
 
@@ -374,8 +354,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def disable_workspace(_, %{input: %{id: id}}, %{context: %{session: session}}) do
-    case Org.disable_workspace(id, session) do
+  def disable_workspace(_, %{input: attrs}, %{context: %{session: session}}) do
+    case Org.disable_workspace(attrs, session) do
       {:ok, workspace} ->
         {:ok, %{workspace: workspace, responses: [%{message: workspace.name <> " disabled"}]}}
 

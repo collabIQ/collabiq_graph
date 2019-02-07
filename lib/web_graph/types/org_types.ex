@@ -40,12 +40,12 @@ defmodule WebGraph.OrgTypes do
     end
 
     field :group, :group do
-      arg(:id, non_null(:binary_id))
+      arg(:id, non_null(:base_id))
       resolve(&OrgResolver.get_group/3)
     end
 
     field :groups, list_of(:group) do
-      arg(:admin, :boolean, default_value: false)
+      arg(:admin, :boolean)
       arg(:filter, :group_filter_input)
       arg(:sort, :sort_input)
       resolve(&OrgResolver.list_groups/3)
@@ -70,18 +70,19 @@ defmodule WebGraph.OrgTypes do
     end
 
     field :users, list_of(:user) do
-      arg(:filter, :org_filter_input)
-      arg(:sort, :org_sort_input)
+      arg(:admin, :boolean)
+      arg(:filter, :user_filter_input)
+      arg(:sort, :sort_input)
       resolve(&OrgResolver.list_users/3)
     end
 
     field :workspace, :workspace do
-      arg(:id, non_null(:binary_id))
+      arg(:id, non_null(:base_id))
       resolve(&OrgResolver.get_workspace/3)
     end
 
     field :workspaces, list_of(:workspace) do
-      arg(:admin, :boolean, default_value: false)
+      arg(:admin, :boolean)
       arg(:filter, :workspace_filter_input)
       arg(:sort, :sort_input)
       resolve(&OrgResolver.list_workspaces/3)
@@ -253,6 +254,13 @@ defmodule WebGraph.OrgTypes do
     field(:type, :string)
   end
 
+  input_object :user_filter_input do
+    field(:name, :string)
+    field(:status, list_of(:string))
+    field(:type, list_of(:string))
+    field(:workspaces, list_of(:base_id))
+  end
+
   input_object :user_input do
     field(:id, :binary_id)
     field(:address, :string)
@@ -273,7 +281,7 @@ defmodule WebGraph.OrgTypes do
   end
 
   input_object :workspace_input do
-    field(:id, :binary_id)
+    field(:id, :base_id)
     field(:color, :string)
     field(:description, :string)
     field(:name, :string)
@@ -409,20 +417,15 @@ defmodule WebGraph.OrgTypes do
   end
 
   object :workspace do
-    field(:id, :binary_id)
+    field(:id, :base_id)
     field(:color, :string)
     field(:created_at, :datetime)
     field(:deleted_at, :datetime)
     field(:description, :string)
 
-    field :folders, list_of(:folder) do
-      arg(:sort, :kb_sort_input)
-      resolve dataloader(Folder, :folders, [])
-    end
-
     field :groups, list_of(:group) do
       arg(:filter, :group_filter_input)
-      arg(:sort, :org_sort_input)
+      arg(:sort, :sort_input)
       resolve dataloader(Group, :groups)
     end
 

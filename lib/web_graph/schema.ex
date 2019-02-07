@@ -32,11 +32,13 @@ defmodule WebGraph.Schema do
   end
 
   query do
+    import_fields(:kb_queries)
     import_fields(:org_queries)
   end
 
   mutation do
     import_fields(:auth_mutations)
+    import_fields(:kb_mutations)
     import_fields(:org_mutations)
   end
 

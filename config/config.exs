@@ -6,6 +6,9 @@
 use Mix.Config
 config :core, ecto_repos: [Core.Repo]
 
+config :core, Core.UUID,
+  salt: System.get_env("HASHID_SALT")
+
 config :web_graph, ecto_repos: [Core.Repo]
 
 # General application configuration

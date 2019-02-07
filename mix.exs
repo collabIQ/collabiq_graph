@@ -43,7 +43,7 @@ defmodule WebGraph.Mixfile do
       {:absinthe_plug, "~> 1.4"},
       {:absinthe_phoenix, "~> 1.4"},
       {:dataloader, "~> 1.0"},
-      {:core, git: "https://github.com/collabIQ/core.git", branch: "master"},
+      {:core, path: "../core"},
       {:cors_plug, "~> 2.0"},
       {:distillery, "~> 2.0"}
     ]
