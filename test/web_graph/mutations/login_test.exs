@@ -12,9 +12,9 @@ defmodule WebGraph.Test.Login do
   }
   """
 
-  test "admin login" do
+  test "admin login", %{conn: conn} do
     response =
-      post(build_conn(), "/graph", %{
+      post(conn, "/graphql", %{
         query: @query,
         variables: %{"email" => "admin@email.com", "password" => "password"}
       })

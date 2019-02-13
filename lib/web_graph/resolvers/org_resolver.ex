@@ -13,8 +13,8 @@ defmodule WebGraph.OrgResolver do
   end
 
   @spec list_roles(map(), map(), Session.t()) :: {:ok, [%Role{}, ...]} | {:ok, nil}
-  def list_roles(_, _args, %{context: %{session: session}}) do
-    case Org.list_roles(session) do
+  def list_roles(_, attrs, %{context: %{session: sess}}) do
+    case Org.list_roles(attrs, sess) do
       {:ok, roles} ->
         {:ok, roles}
 
@@ -24,8 +24,8 @@ defmodule WebGraph.OrgResolver do
   end
 
   @spec list_users(map(), map(), Session.t()) :: {:ok, [%User{}, ...]} | {:ok, nil}
-  def list_users(_, args, %{context: %{session: session}}) do
-    case Org.list_users(args, session) do
+  def list_users(_, args, %{context: %{session: sess}}) do
+    case Org.list_users(args, sess) do
       {:ok, users} ->
         {:ok, users}
 
@@ -35,8 +35,8 @@ defmodule WebGraph.OrgResolver do
   end
 
   @spec list_workspaces(map(), map(), Session.t()) :: {:ok, [%Workspace{}, ...]} | {:ok, nil}
-  def list_workspaces(_, args, %{context: %{session: session}}) do
-    case Org.list_workspaces(args, session) do
+  def list_workspaces(_, args, %{context: %{session: sess}}) do
+    case Org.list_workspaces(args, sess) do
       {:ok, workspaces} ->
         {:ok, workspaces}
 
@@ -198,8 +198,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def enable_agent_group(_, %{input: %{id: id}}, %{context: %{session: session}}) do
-    case Org.enable_agent_group(id, session) do
+  def enable_agent_group(_, %{input: attrs}, %{context: %{session: session}}) do
+    case Org.enable_agent_group(attrs, session) do
       {:ok, group} ->
         {:ok, %{group: group}}
 
@@ -261,8 +261,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def delete_agent_group(_, %{input: %{id: id}}, %{context: %{session: session}}) do
-    case Org.delete_agent_group(id, session) do
+  def delete_agent_group(_, %{input: attrs}, %{context: %{session: session}}) do
+    case Org.delete_agent_group(attrs, session) do
       {:ok, group} ->
         {:ok, %{group: group}}
 
@@ -324,8 +324,8 @@ defmodule WebGraph.OrgResolver do
     end
   end
 
-  def disable_agent_group(_, %{input: %{id: id}}, %{context: %{session: session}}) do
-    case Org.disable_agent_group(id, session) do
+  def disable_agent_group(_, %{input: attrs}, %{context: %{session: session}}) do
+    case Org.disable_agent_group(attrs, session) do
       {:ok, group} ->
         {:ok, %{group: group}}
 

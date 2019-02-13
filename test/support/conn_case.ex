@@ -20,6 +20,7 @@ defmodule WebGraph.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       import WebGraph.Router.Helpers
+      alias AppWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
       @endpoint WebGraph.Endpoint
@@ -32,6 +33,8 @@ defmodule WebGraph.ConnCase do
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Core.Repo, {:shared, self()})
     end
+
+    Core.Seeds.run()
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 

@@ -56,7 +56,7 @@ defmodule WebGraph.OrgTypes do
     end
 
     field :role, :role do
-      arg(:id, non_null(:binary_id))
+      arg(:id, non_null(:base_id))
       resolve(&OrgResolver.get_role/3)
     end
 
@@ -248,7 +248,7 @@ defmodule WebGraph.OrgTypes do
   end
 
   input_object :role_input do
-    field(:id, :binary_id)
+    field(:id, :base_id)
     field(:name, :string)
     field(:permissions, :permissions_input)
     field(:type, :string)
@@ -262,13 +262,14 @@ defmodule WebGraph.OrgTypes do
   end
 
   input_object :user_input do
-    field(:id, :binary_id)
+    field(:id, :base_id)
     field(:address, :string)
     field(:groups, list_of(:binary_id))
     field(:email, :string)
     field(:language, :string)
+    field(:mobile, :string)
     field(:name, :string)
-    field(:phones, list_of(:phone_input))
+    field(:phones, :string)
     field(:role_id, :binary_id)
     field(:timezone, :string)
     field(:title, :string)
@@ -359,18 +360,23 @@ defmodule WebGraph.OrgTypes do
   end
 
   object :permissions do
-    field(:create_agent, :integer)
-    field(:create_agent_group, :integer)
-    field(:create_contact, :integer)
-    field(:create_contact_group, :integer)
-    field(:create_workspace, :integer)
-    field(:update_tenant, :integer)
-    field(:update_agent, :integer)
-    field(:update_agent_group, :integer)
-    field(:update_contact, :integer)
-    field(:update_contact_group, :integer)
-    field(:update_role, :integer)
-    field(:update_workspace, :integer)
+    field(:c_ag, :integer)
+    field(:c_agent, :integer)
+    field(:c_art, :integer)
+    field(:c_cg, :integer)
+    field(:c_con, :integer)
+    field(:c_tag, :integer)
+    field(:c_ws, :integer)
+    field(:m_role, :integer)
+    field(:pub_art, :integer)
+    field(:u_ag, :integer)
+    field(:u_agent, :integer)
+    field(:u_art, :integer)
+    field(:u_cg, :integer)
+    field(:u_con, :integer)
+    field(:u_tag, :integer)
+    field(:u_ten, :integer)
+    field(:u_ws, :integer)
   end
 
   object :phone do
@@ -379,15 +385,16 @@ defmodule WebGraph.OrgTypes do
   end
 
   object :role do
-    field(:id, :binary_id)
+    field(:id, :base_id)
     field(:created_at, :datetime)
     field(:name, :string)
     field(:permissions, :permissions)
+    field(:type, :string)
     field(:updated_at, :datetime)
   end
 
   object :user do
-    field(:id, :binary_id)
+    field(:id, :base_id)
     field(:address, :string)
     field(:created_at, :datetime)
     field(:deleted_at, :datetime)
@@ -401,8 +408,9 @@ defmodule WebGraph.OrgTypes do
     field(:email, :string)
     field(:email_valid, :boolean)
     field(:language, :string)
+    field(:mobile, :string)
     field(:name, :string)
-    field(:phones, list_of(:phone))
+    field(:phone, :string)
     field(:status, :string)
     field(:timezone, :string)
     field(:title, :string)

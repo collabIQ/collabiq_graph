@@ -19,6 +19,7 @@ config :web_graph,
 # Configures the endpoint
 config :web_graph, WebGraph.Endpoint,
   url: [host: "localhost"],
+  secret_key_base: "JbSS+mF2qR3w+3PdYK4g4uBwTA48ZGF6sHpkt0tynRf4EIyrMp0aPb1CAmMgkrkL",
   render_errors: [view: WebGraph.ErrorView, accepts: ~w(json)],
   pubsub: [name: WebGraph.PubSub,
            adapter: Phoenix.PubSub.PG2]
